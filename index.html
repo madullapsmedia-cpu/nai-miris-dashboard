@@ -12,8 +12,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Sinhala Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans Sinhala', sans-serif;
@@ -22,29 +21,12 @@
             overflow-x: hidden;
         }
 
-        .bg-custom-dark {
-            background-color: #0b130e;
-        }
-
-        .bg-custom-card {
-            background-color: #0d1a12;
-        }
-
-        .bg-custom-input {
-            background-color: #08110b;
-        }
-
-        .border-custom-green {
-            border-color: #1b3825;
-        }
-
-        .border-alert-red {
-            border-color: #852222;
-        }
-
-        .border-alert-yellow {
-            border-color: #856414;
-        }
+        .bg-custom-dark { background-color: #0b130e; }
+        .bg-custom-card { background-color: #0d1a12; }
+        .bg-custom-input { background-color: #08110b; }
+        .border-custom-green { border-color: #1b3825; }
+        .border-alert-red { border-color: #852222; }
+        .border-alert-yellow { border-color: #856414; }
 
         .physics-element {
             transition: transform 0.2s, box-shadow 0.2s;
@@ -70,11 +52,9 @@
     <div id="app-container" class="max-w-7xl mx-auto space-y-4">
 
         <!-- SECTION 1: HEADER -->
-        <header
-            class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
+        <header class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
             <div class="flex items-center space-x-3 space-x-reverse">
-                <div
-                    class="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-red-900/40">
+                <div class="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-red-900/40">
                     🌶️
                 </div>
                 <div>
@@ -89,59 +69,49 @@
 
             <!-- Gravity Controls -->
             <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm">
-                <button id="gravity-btn" onclick="toggleGravity()"
-                    class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition duration-300 shadow-md">
+                <button id="gravity-btn" onclick="handleGravityClick()"
+                    class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition duration-300 shadow-md cursor-pointer">
                     <span id="gravity-icon">🚀</span> <span id="gravity-text">Zero-Gravity සක්‍රීය කරන්න</span>
                 </button>
-                <div
-                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 px-3 py-2 rounded-xl flex items-center gap-1">
+                <div class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 px-3 py-2 rounded-xl flex items-center gap-1">
                     <i class="fa-regular fa-circle-check"></i> LK සිංහල
                 </div>
                 <div class="bg-zinc-900 text-zinc-400 border border-zinc-800 px-3 py-2 rounded-xl">
                     GB English
                 </div>
-                <div
-                    class="bg-emerald-950/40 text-emerald-300 border border-emerald-800/40 px-3 py-2 rounded-xl flex items-center gap-2">
+                <div class="bg-emerald-950/40 text-emerald-300 border border-emerald-800/40 px-3 py-2 rounded-xl flex items-center gap-2">
                     📅 අද: Mon, Oct 19, 2026
                 </div>
             </div>
         </header>
 
         <!-- Red Alert Banner -->
-        <div
-            class="physics-element bg-gradient-to-r from-red-950/80 to-custom-dark border border-alert-red rounded-2xl p-4 shadow-lg">
+        <div class="physics-element bg-gradient-to-r from-red-950/80 to-custom-dark border border-alert-red rounded-2xl p-4 shadow-lg">
             <div class="flex items-start md:items-center gap-3">
                 <div class="text-2xl animate-bounce">🚨</div>
                 <div class="space-y-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <span class="font-bold text-red-200 text-sm md:text-base">NPK පොහොර අද යෙදිය යුතුය! (දින 14ක
-                            චක්‍රය සම්පූර්ණයි) [Albert's 20-20-20]</span>
-                        <span class="bg-red-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">අද යෙදිය
-                            යුතුය</span>
+                        <span class="font-bold text-red-200 text-sm md:text-base">NPK පොහොර අද යෙදිය යුතුය! (දින 14ක චක්‍රය සම්පූර්ණයි) [Albert's 20-20-20]</span>
+                        <span class="bg-red-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">අද යෙදිය යුතුය</span>
                     </div>
                     <p class="text-xs md:text-sm text-red-300/80">
-                        අවසන් වරට පොහොර යොදා අදට දින 14ක් සම්පූර්ණයි (Albert's 20-20-20). බුබුලට කරල් සටහන්වීම සඳහා අදම
-                        පොහොර යොදන්න.
+                        අවසන් වරට පොහොර යොදා අදට දින 14ක් සම්පූර්ණයි (Albert's 20-20-20). බුබුලට කරල් සටහන්වීම සඳහා අදම පොහොර යොදන්න.
                     </p>
                 </div>
             </div>
         </div>
 
         <!-- Yellow Warning Banner -->
-        <div
-            class="physics-element bg-gradient-to-r from-amber-950/70 to-custom-dark border border-alert-yellow rounded-2xl p-4 shadow-lg">
+        <div class="physics-element bg-gradient-to-r from-amber-950/70 to-custom-dark border border-alert-yellow rounded-2xl p-4 shadow-lg">
             <div class="flex items-start md:items-center gap-3">
                 <div class="text-2xl">⚠️</div>
                 <div class="space-y-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <span class="font-bold text-amber-200 text-sm md:text-base">දිලීර නාශක හෙට යෙදිය යුතුය! (කොඩා
-                            දින 6ක් ගතවී ඇත) [Antracol 70 WP]</span>
-                        <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">හෙට යෙදිය
-                            යුතුය</span>
+                        <span class="font-bold text-amber-200 text-sm md:text-base">දිලීර නාශක හෙට යෙදිය යුතුය! (කොඩා දින 6ක් ගතවී ඇත) [Antracol 70 WP]</span>
+                        <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">හෙට යෙදිය යුතුය</span>
                     </div>
                     <p class="text-xs md:text-sm text-amber-300/80">
-                        දින 7ක දිලීර නාශක ආරක්ෂිත කාලසීමාව හෙටින් අවසන් වේ (Antracol 70 WP). කොළ කඩ සහ කරල් පෙනුම
-                        පරීක්ෂා කර හෙට දිනයේ යොදන්න.
+                        දින 7ක දිලීර නාශක ආරක්ෂිත කාලසීමාව හෙටින් අවසන් වේ (Antracol 70 WP). කොළ කඩ සහ කරල් පෙනුම පරීක්ෂා කර හෙට දිනයේ යොදන්න.
                     </p>
                 </div>
             </div>
@@ -149,12 +119,10 @@
 
         <!-- Metric Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <div
-                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+            <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
                 <div>
                     <span class="text-xs text-emerald-400 font-medium">මුළු වගා කාලය (දින)</span>
-                    <div class="text-3xl font-bold text-white mt-1">59 <span
-                            class="text-base font-normal text-zinc-400">දින</span></div>
+                    <div class="text-3xl font-bold text-white mt-1">59 <span class="text-base font-normal text-zinc-400">දින</span></div>
                 </div>
                 <div class="text-xs text-emerald-500 font-medium flex items-center justify-between">
                     <span>3 වන අවධිය: මල් හටගැනීම සහ කරල් පිහිටීම</span>
@@ -162,12 +130,10 @@
                 </div>
             </div>
 
-            <div
-                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+            <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
                 <div>
                     <span class="text-xs text-emerald-400 font-medium">මුළු අස්වැන්න එකතුව</span>
-                    <div class="text-3xl font-bold text-white mt-1">27.70 <span
-                            class="text-base font-normal text-zinc-400">kg</span></div>
+                    <div class="text-3xl font-bold text-white mt-1">27.70 <span class="text-base font-normal text-zinc-400">kg</span></div>
                 </div>
                 <div class="text-xs text-emerald-500 font-medium flex items-center justify-between">
                     <span>2 අස්වැන්න වාර (Avg 13.8 kg)</span>
@@ -175,8 +141,7 @@
                 </div>
             </div>
 
-            <div
-                class="physics-element bg-custom-dark border border-amber-500/50 rounded-2xl p-4 flex flex-col justify-between h-36">
+            <div class="physics-element bg-custom-dark border border-amber-500/50 rounded-2xl p-4 flex flex-col justify-between h-36">
                 <div>
                     <span class="text-xs text-amber-400 font-medium">මුළු අස්වැන්න ආදායම</span>
                     <div class="text-3xl font-bold text-amber-400 mt-1">රු. 32,680.00</div>
@@ -187,8 +152,7 @@
                 </div>
             </div>
 
-            <div
-                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+            <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
                 <div>
                     <span class="text-xs text-emerald-400 font-medium">NPK පොහොර යෙදීම</span>
                     <div class="text-2xl font-bold text-white mt-1">14 දිනකට පෙර</div>
@@ -199,8 +163,7 @@
                 </div>
             </div>
 
-            <div
-                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+            <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
                 <div>
                     <span class="text-xs text-emerald-400 font-medium">දිලීර නාශක ආරක්ෂාව</span>
                     <div class="text-2xl font-bold text-white mt-1">6 දිනකට පෙර</div>
@@ -218,8 +181,7 @@
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     🌱 පැළ සිටවූ දිනය සහ මුළු වගා කාලය ගණනය
                 </h2>
-                <button
-                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
+                <button class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
                     වගා චක්‍රය
                 </button>
             </div>
@@ -228,22 +190,17 @@
                 <div class="bg-custom-card border border-custom-green p-4 rounded-xl space-y-3">
                     <label class="text-xs text-emerald-400 block font-medium">පැළ සිටවූ / රෝපණය කළ දිනය:</label>
                     <div class="flex gap-2">
-                        <input type="date" value="2026-08-21"
-                            class="bg-custom-input border border-zinc-700 text-white text-xs rounded-lg px-3 py-2 w-full focus:outline-none">
-                        <button
-                            class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition">අද
-                            දිනය</button>
+                        <input type="date" value="2026-08-21" class="bg-custom-input border border-zinc-700 text-white text-xs rounded-lg px-3 py-2 w-full focus:outline-none">
+                        <button class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition">අද දිනය</button>
                     </div>
                     <p class="text-[11px] text-zinc-400">
-                        පද්ධතියේ පැළ රෝපණය කළ දිනය ඇතුළත් කිරීමෙන් පැළයේ වයස සහ වත්මන් වර්ධන අවධිය ස්වයංක්‍රීයව ගණනය
-                        කෙරේ.
+                        පද්ධතියේ පැළ රෝපණය කළ දිනය ඇතුළත් කිරීමෙන් පැළයේ වයස සහ වත්මන් වර්ධන අවධිය ස්වයංක්‍රීයව ගණනය කෙරේ.
                     </p>
                 </div>
 
                 <div class="md:col-span-3 space-y-4">
                     <div class="flex items-center justify-between text-xs font-semibold">
-                        <span class="text-emerald-300">වත්මන් වර්ධන අවධිය: <span class="text-emerald-400 font-bold">3 වන
-                                අවධිය: මල් හටගැනීම සහ කරල් පිහිටීම</span></span>
+                        <span class="text-emerald-300">වත්මන් වර්ධන අවධිය: <span class="text-emerald-400 font-bold">3 වන අවධිය: මල් හටගැනීම සහ කරල් පිහිටීම</span></span>
                         <span class="text-zinc-400">59 දිනක් ගතවී ඇත · සති 8 + 3d</span>
                     </div>
 
@@ -263,8 +220,7 @@
                             <p class="font-bold">2. ශාකමය වර්ධනය</p>
                             <span class="text-[10px] text-zinc-500">දින 26-50</span>
                         </div>
-                        <div
-                            class="p-2.5 rounded-xl border border-emerald-500/80 bg-emerald-950/40 text-emerald-300 shadow-md">
+                        <div class="p-2.5 rounded-xl border border-emerald-500/80 bg-emerald-950/40 text-emerald-300 shadow-md">
                             <p class="font-bold">3. මල් හා කරල් පිහිටීම</p>
                             <span class="text-[10px] text-emerald-400/80">දින 51-75</span>
                         </div>
@@ -283,122 +239,93 @@
                 <h2 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
                     ⚡ රසායනික සහ පොහොර කාල පරාස සහ යෙදූ ඖෂධ වල ලේබලයේ ඇති නම්
                 </h2>
-                <button
-                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
+                <button class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
                     ස්මාර්ට් පාලකපුවරුව සහ ඖෂධ ලේබලය
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- NPK Card -->
-                <div
-                    class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                <div class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🧪 NPK පොහොර යෙදීම
-                                </h3>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🧪 NPK පොහොර යෙදීම</h3>
                                 <p class="text-[11px] text-zinc-400">පෝෂණ චක්‍රය</p>
                             </div>
-                            <span
-                                class="bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-red-400">අද
-                                යෙදිය යුතුය</span>
+                            <span class="bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-red-400">අද යෙදිය යුතුය</span>
                         </div>
-                        <div
-                            class="bg-custom-dark border border-red-900/50 rounded-xl p-3 flex items-center justify-between">
+                        <div class="bg-custom-dark border border-red-900/50 rounded-xl p-3 flex items-center justify-between">
                             <div>
                                 <span class="text-2xl font-extrabold text-white">14d</span>
                                 <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
                             </div>
                             <div class="text-right">
-                                <span class="text-xs font-bold text-red-400 flex items-center gap-1 justify-end">🎂 අද
-                                    යෙදිය යුතුය</span>
+                                <span class="text-xs font-bold text-red-400 flex items-center gap-1 justify-end">🎂 අද යෙදිය යුතුය</span>
                                 <span class="text-[11px] text-zinc-400">(14/14)</span>
                             </div>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">යෙදූ පොහොර වර්ගයේ ලේබලයේ ඇති නම:</label>
-                            <input type="text" value="Albert's 20–20–20"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                            <input type="text" value="Albert's 20–20–20" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
                             <div class="flex gap-2">
-                                <input type="text" value="10/05/2026"
-                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
-                                <button
-                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
-                                    දිනය</button>
+                                <input type="text" value="10/05/2026" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද දිනය</button>
                             </div>
                         </div>
                     </div>
-                    <button
-                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
-                        අද යෙදූ බව සටහන් කරන්න</button>
+                    <button class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓ අද යෙදූ බව සටහන් කරන්න</button>
                 </div>
 
                 <!-- Fungicide Card -->
-                <div
-                    class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                <div class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🛡️ දිලීර නාශක
-                                    යෙදීම</h3>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🛡️ දිලීර නාශක යෙදීම</h3>
                                 <p class="text-[11px] text-zinc-400">කොළ කොකිවීම්/කාලාන්ත්‍රක්නෝස්</p>
                             </div>
-                            <span
-                                class="bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-amber-400">හෙට
-                                යෙදිය යුතුය</span>
+                            <span class="bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-amber-400">හෙට යෙදිය යුතුය</span>
                         </div>
-                        <div
-                            class="bg-custom-dark border border-amber-900/50 rounded-xl p-3 flex items-center justify-between">
+                        <div class="bg-custom-dark border border-amber-900/50 rounded-xl p-3 flex items-center justify-between">
                             <div>
                                 <span class="text-2xl font-extrabold text-white">6d</span>
                                 <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
                             </div>
                             <div class="text-right">
-                                <span class="text-xs font-bold text-amber-400 flex items-center gap-1 justify-end">⚠️
-                                    හෙට යෙදිය යුතුය!</span>
+                                <span class="text-xs font-bold text-amber-400 flex items-center gap-1 justify-end">⚠️ හෙට යෙදිය යුතුය!</span>
                                 <span class="text-[11px] text-zinc-400">(6/7)</span>
                             </div>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">යෙදූ දිලීර නාශකයේ ලේබලයේ ඇති නම:</label>
-                            <input type="text" value="Antracol 70 WP"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                            <input type="text" value="Antracol 70 WP" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
                             <div class="flex gap-2">
-                                <input type="text" value="10/13/2026"
-                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
-                                <button
-                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
-                                    දිනය</button>
+                                <input type="text" value="10/13/2026" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද දිනය</button>
                             </div>
                         </div>
                     </div>
-                    <button
-                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
-                        අද යෙදූ බව සටහන් කරන්න</button>
+                    <button class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓ අද යෙදූ බව සටහන් කරන්න</button>
                 </div>
 
                 <!-- Pesticide Card -->
-                <div
-                    class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                <div class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🐛 පළිබෝධ නාශක
-                                    යෙදීම</h3>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🐛 පළිබෝධ නාශක යෙදීම</h3>
                                 <p class="text-[11px] text-zinc-400">පැළ මැක්කන්, මයිටාවන්</p>
                             </div>
-                            <span
-                                class="bg-emerald-900/80 text-emerald-400 text-[11px] font-bold px-2 py-0.5 rounded-full border border-emerald-700">ආරක්ෂිතයි</span>
+                            <span class="bg-emerald-900/80 text-emerald-400 text-[11px] font-bold px-2 py-0.5 rounded-full border border-emerald-700">ආරක්ෂිතයි</span>
                         </div>
-                        <div
-                            class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
+                        <div class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
                             <div>
                                 <span class="text-2xl font-extrabold text-white">5d</span>
                                 <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
@@ -409,41 +336,30 @@
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">යෙදූ පළිබෝධ නාශකයේ ලේබලයේ ඇති නම:</label>
-                            <input type="text" value="Abamectin 1.8 EC"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                            <input type="text" value="Abamectin 1.8 EC" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
                             <div class="flex gap-2">
-                                <input type="text" value="10/14/2026"
-                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
-                                <button
-                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
-                                    දිනය</button>
+                                <input type="text" value="10/14/2026" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද දිනය</button>
                             </div>
                         </div>
                     </div>
-                    <button
-                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
-                        අද යෙදූ බව සටහන් කරන්න</button>
+                    <button class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓ අද යෙදූ බව සටහන් කරන්න</button>
                 </div>
 
                 <!-- Hormones Card -->
-                <div
-                    class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                <div class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">💧 හෝමෝන / මල්
-                                    ආරක්ෂක</h3>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">💧 හෝමෝන / මල් ආරක්ෂක</h3>
                                 <p class="text-[11px] text-zinc-400">මල් හැලීම වැළැක්වීම</p>
                             </div>
-                            <span
-                                class="bg-teal-900/80 text-teal-300 text-[11px] font-bold px-2 py-0.5 rounded-full border border-teal-700">යහ
-                                පත්‍වත්</span>
+                            <span class="bg-teal-900/80 text-teal-300 text-[11px] font-bold px-2 py-0.5 rounded-full border border-teal-700">යහ පත්‍වත්</span>
                         </div>
-                        <div
-                            class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
+                        <div class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
                             <div>
                                 <span class="text-2xl font-extrabold text-white">4d</span>
                                 <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
@@ -454,23 +370,17 @@
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">යෙදූ හෝමෝනයේ ලේබලයේ ඇති නම:</label>
-                            <input type="text" value="Planofix"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                            <input type="text" value="Planofix" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
                             <div class="flex gap-2">
-                                <input type="text" value="10/15/2026"
-                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
-                                <button
-                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
-                                    දිනය</button>
+                                <input type="text" value="10/15/2026" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද දිනය</button>
                             </div>
                         </div>
                     </div>
-                    <button
-                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
-                        අද යෙදූ බව සටහන් කරන්න</button>
+                    <button class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓ අද යෙදූ බව සටහන් කරන්න</button>
                 </div>
             </div>
         </div>
@@ -481,74 +391,50 @@
                 <h2 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
                     ⚖️ දෛනික අස්වනු සටහන, 1kg විකුණුම් මිල සහ මුළු ආදායම
                 </h2>
-                <span
-                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">අස්වනු
-                    සහ මූල්‍ය වාර්තා</span>
+                <span class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">අස්වනු සහ මූල්‍ය වාර්තා</span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                <!-- Left Form -->
                 <div class="lg:col-span-5 bg-custom-card border border-custom-green rounded-xl p-4 space-y-4">
-                    <h3 class="font-bold text-white text-sm flex items-center gap-2">➕ දෛනික අස්වැන්න සහ මිල සටහන් කිරීම
-                    </h3>
+                    <h3 class="font-bold text-white text-sm flex items-center gap-2">➕ දෛනික අස්වැන්න සහ මිල සටහන් කිරීම</h3>
                     <div class="space-y-3">
                         <div>
                             <label class="text-xs text-emerald-400 block mb-1">අස්වනු නෙළූ දිනය:</label>
                             <div class="flex gap-2">
-                                <input type="text" value="10/19/2026"
-                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
-                                <button
-                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-3 py-1.5 rounded-lg">අද
-                                    දිනය</button>
+                                <input type="text" value="10/19/2026" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                                <button class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-3 py-1.5 rounded-lg">අද දිනය</button>
                             </div>
                         </div>
                         <div>
                             <label class="text-xs text-emerald-400 block mb-1">බර කිලෝග්‍රෑම් වලින් (kg):</label>
-                            <input type="text" placeholder="e.g. 15.5"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                            <input type="text" placeholder="e.g. 15.5" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
                             <div class="flex gap-1.5 mt-2">
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+1kg</button>
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+5kg</button>
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+10kg</button>
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+25kg</button>
+                                <button class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+1kg</button>
+                                <button class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+5kg</button>
+                                <button class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+10kg</button>
+                                <button class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+25kg</button>
                             </div>
                         </div>
                         <div>
                             <label class="text-xs text-emerald-400 block mb-1">1kg විකුණුම් මිල (රු.):</label>
-                            <input type="text" value="1200"
-                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                            <input type="text" value="1200" class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
                             <div class="flex gap-1.5 mt-2">
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
-                                    800</button>
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
-                                    1,000</button>
-                                <button
-                                    class="bg-custom-dark border border-emerald-600 text-emerald-300 text-[11px] px-2 py-0.5 rounded">Rs.
-                                    1,200</button>
-                                <button
-                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
-                                    1,500</button>
+                                <button class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs. 800</button>
+                                <button class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs. 1,000</button>
+                                <button class="bg-custom-dark border border-emerald-600 text-emerald-300 text-[11px] px-2 py-0.5 rounded">Rs. 1,200</button>
+                                <button class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs. 1,500</button>
                             </div>
                         </div>
-                        <div
-                            class="bg-custom-input border border-dashed border-amber-500/60 rounded-xl p-3 flex items-center justify-between">
+                        <div class="bg-custom-input border border-dashed border-amber-500/60 rounded-xl p-3 flex items-center justify-between">
                             <span class="text-xs text-zinc-400">ගණනය කළ මුළු ආදායම:</span>
                             <span class="text-base font-bold text-amber-400">රු. 0.00</span>
                         </div>
-                        <button
-                            class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
+                        <button class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
                             💾 අස්වැන්න සහ ආදායම සටහන් කරන්න
                         </button>
                     </div>
                 </div>
 
-                <!-- Right History Table -->
                 <div class="lg:col-span-7 bg-custom-card border border-custom-green rounded-xl p-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <h3 class="font-bold text-white text-sm flex items-center gap-2">📋 අස්වනු ඉතිහාසය සහ ආදායම</h3>
@@ -570,9 +456,7 @@
                                 <tr>
                                     <td class="py-2.5 text-zinc-400">2</td>
                                     <td class="py-2.5 text-white font-medium">Oct 15, 2026</td>
-                                    <td class="py-2.5"><span
-                                            class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">16.50
-                                            kg</span></td>
+                                    <td class="py-2.5"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">16.50 kg</span></td>
                                     <td class="py-2.5 text-emerald-300">රු. 1,200.00</td>
                                     <td class="py-2.5 text-amber-400 font-bold">රු. 19,800.00</td>
                                     <td class="py-2.5 text-zinc-300">A ශ්‍රේණියේ පළමු නෙළීම</td>
@@ -580,9 +464,7 @@
                                 <tr>
                                     <td class="py-2.5 text-zinc-400">1</td>
                                     <td class="py-2.5 text-white font-medium">Oct 11, 2026</td>
-                                    <td class="py-2.5"><span
-                                            class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">11.20
-                                            kg</span></td>
+                                    <td class="py-2.5"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">11.20 kg</span></td>
                                     <td class="py-2.5 text-emerald-300">රු. 1,150.00</td>
                                     <td class="py-2.5 text-amber-400 font-bold">රු. 12,880.00</td>
                                     <td class="py-2.5 text-zinc-300">පළමුකොළ සහ ඉදුණු කරල්</td>
@@ -594,6 +476,129 @@
             </div>
         </div>
 
+        <!-- SECTION 4: WEATHER SECTION AT BOTTOM -->
+        <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-5 shadow-lg space-y-4">
+            <div class="flex items-center gap-2">
+                <span class="text-emerald-400 text-xl">🌧️</span>
+                <h2 class="text-lg font-bold text-emerald-400">කාළගුණය / Weather</h2>
+            </div>
+
+            <p class="text-amber-400 text-xs font-medium flex items-center gap-1.5">
+                <span>⚠️</span> Live weather unavailable - showing demo data. / සජීවී දත්ත නොලැබුණි - ආදර්ශ දත්ත පෙන්වයි.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4">
+                    <span class="text-xs text-zinc-400 block mb-1">උෂ්ණත්වය / Temp</span>
+                    <div class="text-2xl font-extrabold text-white">29.0°C</div>
+                </div>
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4">
+                    <span class="text-xs text-zinc-400 block mb-1">ආර්ද්‍රතාව / Humidity</span>
+                    <div class="text-2xl font-extrabold text-white">78%</div>
+                </div>
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4">
+                    <span class="text-xs text-zinc-400 block mb-1">සුළං / Wind</span>
+                    <div class="text-2xl font-extrabold text-white">12 km/h</div>
+                </div>
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4">
+                    <span class="text-xs text-zinc-400 block mb-1">අද වර්ෂාව / Rain chance</span>
+                    <div class="text-2xl font-extrabold text-white">20%</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-white text-sm">අද / Today</h3>
+                        <div class="text-xs text-zinc-300 flex items-center gap-1"><span>🌡️</span> 23° - 33°C</div>
+                        <div class="text-xs text-indigo-300 flex items-center gap-1"><span>☂️</span> 20% · 0.0 mm</div>
+                        <div class="text-xs text-cyan-300 flex items-center gap-1"><span>💧</span> 180 L</div>
+                    </div>
+                    <div class="pt-2">
+                        <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800 text-[11px] font-medium px-3 py-1.5 rounded-full block text-center">
+                            ජල සැපයුම් කළ හැක / Water OK
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-white text-sm">Mon 19 Oct</h3>
+                        <div class="text-xs text-zinc-300 flex items-center gap-1"><span>🌡️</span> 23° - 31°C</div>
+                        <div class="text-xs text-indigo-300 flex items-center gap-1"><span>☂️</span> 75% · 14.0 mm</div>
+                        <div class="text-xs text-cyan-300 flex items-center gap-1"><span>💧</span> 0 L</div>
+                    </div>
+                    <div class="pt-2">
+                        <span class="bg-zinc-800/80 text-cyan-400 border border-zinc-700 text-[11px] font-medium px-3 py-1.5 rounded-full block text-center">
+                            නවත්වන්න / Skip
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-white text-sm">Tue 20 Oct</h3>
+                        <div class="text-xs text-zinc-300 flex items-center gap-1"><span>🌡️</span> 22° - 30°C</div>
+                        <div class="text-xs text-indigo-300 flex items-center gap-1"><span>☂️</span> 45% · 4.0 mm</div>
+                        <div class="text-xs text-cyan-300 flex items-center gap-1"><span>💧</span> 75 L</div>
+                    </div>
+                    <div class="pt-2">
+                        <span class="bg-amber-950/80 text-amber-400 border border-amber-800 text-[11px] font-medium px-3 py-1.5 rounded-full block text-center">
+                            අඩු කරන්න / Reduce
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-white text-sm">Wed 21 Oct</h3>
+                        <div class="text-xs text-zinc-300 flex items-center gap-1"><span>🌡️</span> 24° - 34°C</div>
+                        <div class="text-xs text-indigo-300 flex items-center gap-1"><span>☂️</span> 10% · 0.0 mm</div>
+                        <div class="text-xs text-cyan-300 flex items-center gap-1"><span>💧</span> 180 L</div>
+                    </div>
+                    <div class="pt-2">
+                        <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800 text-[11px] font-medium px-3 py-1.5 rounded-full block text-center">
+                            ජල සැපයුම් කළ හැක / Water OK
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-custom-card border border-custom-green rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-white text-sm">Thu 22 Oct</h3>
+                        <div class="text-xs text-zinc-300 flex items-center gap-1"><span>🌡️</span> 23° - 32°C</div>
+                        <div class="text-xs text-indigo-300 flex items-center gap-1"><span>☂️</span> 30% · 1.0 mm</div>
+                        <div class="text-xs text-cyan-300 flex items-center gap-1"><span>💧</span> 150 L</div>
+                    </div>
+                    <div class="pt-2">
+                        <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800 text-[11px] font-medium px-3 py-1.5 rounded-full block text-center">
+                            ජල සැපයුම් කළ හැක / Water OK
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="physics-element text-center text-xs text-zinc-500 py-4">
+            නයි මිරිස් වගා කළමනාකරණ පද්ධතිය © 2026 · සියලු හිමිකම් ඇවිරිණි.
+        </footer>
+
+    </div>
+
+    <!-- Password Modal -->
+    <div id="pw-modal" class="hidden fixed inset-0 z-[9999] items-center justify-center bg-black/70 p-4">
+        <div class="bg-custom-card border border-custom-green rounded-2xl p-6 max-w-sm w-full space-y-4 text-center shadow-2xl">
+            <div class="text-3xl">🔐</div>
+            <h3 class="text-lg font-bold text-white">Zero-Gravity මුරපදය</h3>
+            <p class="text-xs text-zinc-400">Zero-Gravity Physics සක්‍රීය කිරීමට මුරපදය ඇතුළත් කරන්න.</p>
+            <input type="password" id="pw-input" placeholder="Enter password" class="w-full bg-custom-input border border-custom-green rounded-xl px-4 py-2 text-center text-white text-sm focus:outline-none focus:border-emerald-500">
+            <p id="pw-error" class="text-xs text-red-500 hidden font-bold">❌ මුරපදය වැරදියි! නැවත උත්සාහ කරන්න.</p>
+            <div class="flex gap-2">
+                <button onclick="closePwModal()" class="w-1/2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2 rounded-xl text-xs font-semibold">අවලංගු කරන්න</button>
+                <button onclick="checkPassword()" class="w-1/2 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-xl text-xs font-bold">තහවුරු කරන්න</button>
+            </div>
+        </div>
     </div>
 
     <!-- Antigravity Physics Script -->
@@ -608,14 +613,40 @@
         let engine, runner, mouseConstraint;
         let isAntigravityActive = false;
         let physicsBodies = [];
+        const CORRECT_PASSWORD = "1234";
 
-        function toggleGravity() {
+        function handleGravityClick() {
             if (!isAntigravityActive) {
-                startAntigravity();
+                document.getElementById('pw-modal').classList.remove('hidden');
+                document.getElementById('pw-modal').classList.add('flex');
+                document.getElementById('pw-input').value = '';
+                document.getElementById('pw-error').classList.add('hidden');
+                document.getElementById('pw-input').focus();
             } else {
                 stopAntigravity();
             }
         }
+
+        function closePwModal() {
+            document.getElementById('pw-modal').classList.add('hidden');
+            document.getElementById('pw-modal').classList.remove('flex');
+        }
+
+        function checkPassword() {
+            const entered = document.getElementById('pw-input').value;
+            if (entered === CORRECT_PASSWORD) {
+                closePwModal();
+                startAntigravity();
+            } else {
+                document.getElementById('pw-error').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('pw-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
 
         function startAntigravity() {
             isAntigravityActive = true;
