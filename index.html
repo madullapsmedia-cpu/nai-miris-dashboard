@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="si">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>නයි මිරිස් (Scotch Bonnet) වගා පාලන පුවරුව</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Matter.js Physics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Sinhala Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background-color: #050a06;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .bg-custom-dark {
+            background-color: #0b130e;
+        }
+
+        .bg-custom-card {
+            background-color: #0d1a12;
+        }
+
+        .bg-custom-input {
+            background-color: #08110b;
+        }
+
+        .border-custom-green {
+            border-color: #1b3825;
+        }
+
+        .border-alert-red {
+            border-color: #852222;
+        }
+
+        .border-alert-yellow {
+            border-color: #856414;
+        }
+
+        .physics-element {
+            transition: transform 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+
+        .antigravity-active .physics-element {
+            position: absolute !important;
+            margin: 0 !important;
+            cursor: grab;
+            z-index: 50;
+            touch-action: none;
+        }
+
+        .antigravity-active .physics-element:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-6 min-h-screen">
+
+    <div id="app-container" class="max-w-7xl mx-auto space-y-4">
+
+        <!-- SECTION 1: HEADER -->
+        <header
+            class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                    class="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-red-900/40">
+                    🌶️
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+                        නයි මිරිස් (Scotch Bonnet) වගා පාලන පුවරුව
+                    </h1>
+                    <p class="text-xs md:text-sm text-emerald-500/80">
+                        නයි මිරිස් වගා කළමනාකරණ පද්ධතිය - වගා කාලය, යෙදූ පොහොර, අස්වැන්න සහ ආදායම් සටහන
+                    </p>
+                </div>
+            </div>
+
+            <!-- Gravity Controls -->
+            <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm">
+                <button id="gravity-btn" onclick="toggleGravity()"
+                    class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition duration-300 shadow-md">
+                    <span id="gravity-icon">🚀</span> <span id="gravity-text">Zero-Gravity සක්‍රීය කරන්න</span>
+                </button>
+                <div
+                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 px-3 py-2 rounded-xl flex items-center gap-1">
+                    <i class="fa-regular fa-circle-check"></i> LK සිංහල
+                </div>
+                <div class="bg-zinc-900 text-zinc-400 border border-zinc-800 px-3 py-2 rounded-xl">
+                    GB English
+                </div>
+                <div
+                    class="bg-emerald-950/40 text-emerald-300 border border-emerald-800/40 px-3 py-2 rounded-xl flex items-center gap-2">
+                    📅 අද: Mon, Oct 19, 2026
+                </div>
+            </div>
+        </header>
+
+        <!-- Red Alert Banner -->
+        <div
+            class="physics-element bg-gradient-to-r from-red-950/80 to-custom-dark border border-alert-red rounded-2xl p-4 shadow-lg">
+            <div class="flex items-start md:items-center gap-3">
+                <div class="text-2xl animate-bounce">🚨</div>
+                <div class="space-y-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-bold text-red-200 text-sm md:text-base">NPK පොහොර අද යෙදිය යුතුය! (දින 14ක
+                            චක්‍රය සම්පූර්ණයි) [Albert's 20-20-20]</span>
+                        <span class="bg-red-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">අද යෙදිය
+                            යුතුය</span>
+                    </div>
+                    <p class="text-xs md:text-sm text-red-300/80">
+                        අවසන් වරට පොහොර යොදා අදට දින 14ක් සම්පූර්ණයි (Albert's 20-20-20). බුබුලට කරල් සටහන්වීම සඳහා අදම
+                        පොහොර යොදන්න.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yellow Warning Banner -->
+        <div
+            class="physics-element bg-gradient-to-r from-amber-950/70 to-custom-dark border border-alert-yellow rounded-2xl p-4 shadow-lg">
+            <div class="flex items-start md:items-center gap-3">
+                <div class="text-2xl">⚠️</div>
+                <div class="space-y-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-bold text-amber-200 text-sm md:text-base">දිලීර නාශක හෙට යෙදිය යුතුය! (කොඩා
+                            දින 6ක් ගතවී ඇත) [Antracol 70 WP]</span>
+                        <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">හෙට යෙදිය
+                            යුතුය</span>
+                    </div>
+                    <p class="text-xs md:text-sm text-amber-300/80">
+                        දින 7ක දිලීර නාශක ආරක්ෂිත කාලසීමාව හෙටින් අවසන් වේ (Antracol 70 WP). කොළ කඩ සහ කරල් පෙනුම
+                        පරීක්ෂා කර හෙට දිනයේ යොදන්න.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div
+                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+                <div>
+                    <span class="text-xs text-emerald-400 font-medium">මුළු වගා කාලය (දින)</span>
+                    <div class="text-3xl font-bold text-white mt-1">59 <span
+                            class="text-base font-normal text-zinc-400">දින</span></div>
+                </div>
+                <div class="text-xs text-emerald-500 font-medium flex items-center justify-between">
+                    <span>3 වන අවධිය: මල් හටගැනීම සහ කරල් පිහිටීම</span>
+                    <span class="text-2xl">🌱</span>
+                </div>
+            </div>
+
+            <div
+                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+                <div>
+                    <span class="text-xs text-emerald-400 font-medium">මුළු අස්වැන්න එකතුව</span>
+                    <div class="text-3xl font-bold text-white mt-1">27.70 <span
+                            class="text-base font-normal text-zinc-400">kg</span></div>
+                </div>
+                <div class="text-xs text-emerald-500 font-medium flex items-center justify-between">
+                    <span>2 අස්වැන්න වාර (Avg 13.8 kg)</span>
+                    <span class="text-2xl">🌶️</span>
+                </div>
+            </div>
+
+            <div
+                class="physics-element bg-custom-dark border border-amber-500/50 rounded-2xl p-4 flex flex-col justify-between h-36">
+                <div>
+                    <span class="text-xs text-amber-400 font-medium">මුළු අස්වැන්න ආදායම</span>
+                    <div class="text-3xl font-bold text-amber-400 mt-1">රු. 32,680.00</div>
+                </div>
+                <div class="text-xs text-amber-500 font-medium flex items-center justify-between">
+                    <span>සාමාන්‍ය 1kg: රු. 1180 /kg</span>
+                    <span class="text-2xl">💰</span>
+                </div>
+            </div>
+
+            <div
+                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+                <div>
+                    <span class="text-xs text-emerald-400 font-medium">NPK පොහොර යෙදීම</span>
+                    <div class="text-2xl font-bold text-white mt-1">14 දිනකට පෙර</div>
+                </div>
+                <div class="text-xs text-red-400 font-medium flex items-center justify-between">
+                    <span>🚨 අද යෙදිය යුතුය</span>
+                    <span class="text-2xl">🧪</span>
+                </div>
+            </div>
+
+            <div
+                class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-4 flex flex-col justify-between h-36">
+                <div>
+                    <span class="text-xs text-emerald-400 font-medium">දිලීර නාශක ආරක්ෂාව</span>
+                    <div class="text-2xl font-bold text-white mt-1">6 දිනකට පෙර</div>
+                </div>
+                <div class="text-xs text-amber-400 font-medium flex items-center justify-between">
+                    <span>⚠️ හෙට යෙදිය යුතුය!</span>
+                    <span class="text-2xl">🛡️</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-5 shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    🌱 පැළ සිටවූ දිනය සහ මුළු වගා කාලය ගණනය
+                </h2>
+                <button
+                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
+                    වගා චක්‍රය
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                <div class="bg-custom-card border border-custom-green p-4 rounded-xl space-y-3">
+                    <label class="text-xs text-emerald-400 block font-medium">පැළ සිටවූ / රෝපණය කළ දිනය:</label>
+                    <div class="flex gap-2">
+                        <input type="date" value="2026-08-21"
+                            class="bg-custom-input border border-zinc-700 text-white text-xs rounded-lg px-3 py-2 w-full focus:outline-none">
+                        <button
+                            class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition">අද
+                            දිනය</button>
+                    </div>
+                    <p class="text-[11px] text-zinc-400">
+                        පද්ධතියේ පැළ රෝපණය කළ දිනය ඇතුළත් කිරීමෙන් පැළයේ වයස සහ වත්මන් වර්ධන අවධිය ස්වයංක්‍රීයව ගණනය
+                        කෙරේ.
+                    </p>
+                </div>
+
+                <div class="md:col-span-3 space-y-4">
+                    <div class="flex items-center justify-between text-xs font-semibold">
+                        <span class="text-emerald-300">වත්මන් වර්ධන අවධිය: <span class="text-emerald-400 font-bold">3 වන
+                                අවධිය: මල් හටගැනීම සහ කරල් පිහිටීම</span></span>
+                        <span class="text-zinc-400">59 දිනක් ගතවී ඇත · සති 8 + 3d</span>
+                    </div>
+
+                    <div class="h-3 w-full bg-zinc-800 rounded-full overflow-hidden flex">
+                        <div class="h-full bg-emerald-500 w-[25%]"></div>
+                        <div class="h-full bg-emerald-400 w-[25%]"></div>
+                        <div class="h-full bg-amber-500 w-[25%]"></div>
+                        <div class="h-full bg-zinc-700 w-[25%]"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs">
+                        <div class="p-2.5 rounded-xl border border-zinc-800 bg-custom-card text-zinc-400">
+                            <p class="font-bold">1. පැළ සහ මුල් ඇදීම</p>
+                            <span class="text-[10px] text-zinc-500">දින 1-25</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl border border-zinc-800 bg-custom-card text-zinc-400">
+                            <p class="font-bold">2. ශාකමය වර්ධනය</p>
+                            <span class="text-[10px] text-zinc-500">දින 26-50</span>
+                        </div>
+                        <div
+                            class="p-2.5 rounded-xl border border-emerald-500/80 bg-emerald-950/40 text-emerald-300 shadow-md">
+                            <p class="font-bold">3. මල් හා කරල් පිහිටීම</p>
+                            <span class="text-[10px] text-emerald-400/80">දින 51-75</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl border border-zinc-800 bg-custom-card text-zinc-400">
+                            <p class="font-bold">4. අස්වැන්න නෙළීමේ අවධිය</p>
+                            <span class="text-[10px] text-zinc-500">දින 76+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: CHEMICAL & FERTILIZER SCHEDULES -->
+        <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-5 shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
+                    ⚡ රසායනික සහ පොහොර කාල පරාස සහ යෙදූ ඖෂධ වල ලේබලයේ ඇති නම්
+                </h2>
+                <button
+                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">
+                    ස්මාර්ට් පාලකපුවරුව සහ ඖෂධ ලේබලය
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- NPK Card -->
+                <div
+                    class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🧪 NPK පොහොර යෙදීම
+                                </h3>
+                                <p class="text-[11px] text-zinc-400">පෝෂණ චක්‍රය</p>
+                            </div>
+                            <span
+                                class="bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-red-400">අද
+                                යෙදිය යුතුය</span>
+                        </div>
+                        <div
+                            class="bg-custom-dark border border-red-900/50 rounded-xl p-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-extrabold text-white">14d</span>
+                                <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-red-400 flex items-center gap-1 justify-end">🎂 අද
+                                    යෙදිය යුතුය</span>
+                                <span class="text-[11px] text-zinc-400">(14/14)</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">යෙදූ පොහොර වර්ගයේ ලේබලයේ ඇති නම:</label>
+                            <input type="text" value="Albert's 20–20–20"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
+                            <div class="flex gap-2">
+                                <input type="text" value="10/05/2026"
+                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button
+                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
+                                    දිනය</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
+                        අද යෙදූ බව සටහන් කරන්න</button>
+                </div>
+
+                <!-- Fungicide Card -->
+                <div
+                    class="border border-amber-500/60 rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🛡️ දිලීර නාශක
+                                    යෙදීම</h3>
+                                <p class="text-[11px] text-zinc-400">කොළ කොකිවීම්/කාලාන්ත්‍රක්නෝස්</p>
+                            </div>
+                            <span
+                                class="bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full border border-amber-400">හෙට
+                                යෙදිය යුතුය</span>
+                        </div>
+                        <div
+                            class="bg-custom-dark border border-amber-900/50 rounded-xl p-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-extrabold text-white">6d</span>
+                                <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-amber-400 flex items-center gap-1 justify-end">⚠️
+                                    හෙට යෙදිය යුතුය!</span>
+                                <span class="text-[11px] text-zinc-400">(6/7)</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">යෙදූ දිලීර නාශකයේ ලේබලයේ ඇති නම:</label>
+                            <input type="text" value="Antracol 70 WP"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
+                            <div class="flex gap-2">
+                                <input type="text" value="10/13/2026"
+                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button
+                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
+                                    දිනය</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
+                        අද යෙදූ බව සටහන් කරන්න</button>
+                </div>
+
+                <!-- Pesticide Card -->
+                <div
+                    class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">🐛 පළිබෝධ නාශක
+                                    යෙදීම</h3>
+                                <p class="text-[11px] text-zinc-400">පැළ මැක්කන්, මයිටාවන්</p>
+                            </div>
+                            <span
+                                class="bg-emerald-900/80 text-emerald-400 text-[11px] font-bold px-2 py-0.5 rounded-full border border-emerald-700">ආරක්ෂිතයි</span>
+                        </div>
+                        <div
+                            class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-extrabold text-white">5d</span>
+                                <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-emerald-400">තව දින 5 දින</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">යෙදූ පළිබෝධ නාශකයේ ලේබලයේ ඇති නම:</label>
+                            <input type="text" value="Abamectin 1.8 EC"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
+                            <div class="flex gap-2">
+                                <input type="text" value="10/14/2026"
+                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button
+                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
+                                    දිනය</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
+                        අද යෙදූ බව සටහන් කරන්න</button>
+                </div>
+
+                <!-- Hormones Card -->
+                <div
+                    class="border border-custom-green rounded-xl p-4 bg-custom-card space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base flex items-center gap-1.5">💧 හෝමෝන / මල්
+                                    ආරක්ෂක</h3>
+                                <p class="text-[11px] text-zinc-400">මල් හැලීම වැළැක්වීම</p>
+                            </div>
+                            <span
+                                class="bg-teal-900/80 text-teal-300 text-[11px] font-bold px-2 py-0.5 rounded-full border border-teal-700">යහ
+                                පත්‍වත්</span>
+                        </div>
+                        <div
+                            class="bg-custom-dark border border-emerald-900/30 rounded-xl p-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-extrabold text-white">4d</span>
+                                <p class="text-[10px] text-zinc-400">ගතවූ දින ගණන</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-teal-300">තව දින 8 දින</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">යෙදූ හෝමෝනයේ ලේබලයේ ඇති නම:</label>
+                            <input type="text" value="Planofix"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-emerald-300 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-zinc-400 block">අවසන් වරට යෙදූ දිනය:</label>
+                            <div class="flex gap-2">
+                                <input type="text" value="10/15/2026"
+                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white text-center focus:outline-none">
+                                <button
+                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-2.5 py-1.5 rounded-lg whitespace-nowrap">අද
+                                    දිනය</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5 transition">✓
+                        අද යෙදූ බව සටහන් කරන්න</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: DAILY HARVEST & REVENUE -->
+        <div class="physics-element bg-custom-dark border border-custom-green rounded-2xl p-5 shadow-lg space-y-4">
+            <div class="flex justify-between items-center border-b border-custom-green pb-3">
+                <h2 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
+                    ⚖️ දෛනික අස්වනු සටහන, 1kg විකුණුම් මිල සහ මුළු ආදායම
+                </h2>
+                <span
+                    class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 text-xs px-3 py-1.5 rounded-lg">අස්වනු
+                    සහ මූල්‍ය වාර්තා</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <!-- Left Form -->
+                <div class="lg:col-span-5 bg-custom-card border border-custom-green rounded-xl p-4 space-y-4">
+                    <h3 class="font-bold text-white text-sm flex items-center gap-2">➕ දෛනික අස්වැන්න සහ මිල සටහන් කිරීම
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-xs text-emerald-400 block mb-1">අස්වනු නෙළූ දිනය:</label>
+                            <div class="flex gap-2">
+                                <input type="text" value="10/19/2026"
+                                    class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                                <button
+                                    class="bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 text-xs px-3 py-1.5 rounded-lg">අද
+                                    දිනය</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-emerald-400 block mb-1">බර කිලෝග්‍රෑම් වලින් (kg):</label>
+                            <input type="text" placeholder="e.g. 15.5"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                            <div class="flex gap-1.5 mt-2">
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+1kg</button>
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+5kg</button>
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+10kg</button>
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-emerald-300 text-[11px] px-2 py-0.5 rounded">+25kg</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-emerald-400 block mb-1">1kg විකුණුම් මිල (රු.):</label>
+                            <input type="text" value="1200"
+                                class="w-full bg-custom-input border border-custom-green rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+                            <div class="flex gap-1.5 mt-2">
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
+                                    800</button>
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
+                                    1,000</button>
+                                <button
+                                    class="bg-custom-dark border border-emerald-600 text-emerald-300 text-[11px] px-2 py-0.5 rounded">Rs.
+                                    1,200</button>
+                                <button
+                                    class="bg-custom-dark border border-custom-green text-zinc-400 text-[11px] px-2 py-0.5 rounded">Rs.
+                                    1,500</button>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-custom-input border border-dashed border-amber-500/60 rounded-xl p-3 flex items-center justify-between">
+                            <span class="text-xs text-zinc-400">ගණනය කළ මුළු ආදායම:</span>
+                            <span class="text-base font-bold text-amber-400">රු. 0.00</span>
+                        </div>
+                        <button
+                            class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
+                            💾 අස්වැන්න සහ ආදායම සටහන් කරන්න
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right History Table -->
+                <div class="lg:col-span-7 bg-custom-card border border-custom-green rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-white text-sm flex items-center gap-2">📋 අස්වනු ඉතිහාසය සහ ආදායම</h3>
+                        <span class="text-xs text-zinc-400">මුළු වාර ගණන: <strong class="text-white">2</strong></span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-custom-green text-zinc-400">
+                                    <th class="py-2">#</th>
+                                    <th class="py-2">දිනය</th>
+                                    <th class="py-2">බර (Kg)</th>
+                                    <th class="py-2">1 Kg මිල</th>
+                                    <th class="py-2">මුළු ආදායම</th>
+                                    <th class="py-2">විස්තර</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-custom-green/30">
+                                <tr>
+                                    <td class="py-2.5 text-zinc-400">2</td>
+                                    <td class="py-2.5 text-white font-medium">Oct 15, 2026</td>
+                                    <td class="py-2.5"><span
+                                            class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">16.50
+                                            kg</span></td>
+                                    <td class="py-2.5 text-emerald-300">රු. 1,200.00</td>
+                                    <td class="py-2.5 text-amber-400 font-bold">රු. 19,800.00</td>
+                                    <td class="py-2.5 text-zinc-300">A ශ්‍රේණියේ පළමු නෙළීම</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 text-zinc-400">1</td>
+                                    <td class="py-2.5 text-white font-medium">Oct 11, 2026</td>
+                                    <td class="py-2.5"><span
+                                            class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold">11.20
+                                            kg</span></td>
+                                    <td class="py-2.5 text-emerald-300">රු. 1,150.00</td>
+                                    <td class="py-2.5 text-amber-400 font-bold">රු. 12,880.00</td>
+                                    <td class="py-2.5 text-zinc-300">පළමුකොළ සහ ඉදුණු කරල්</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Antigravity Physics Script -->
+    <script>
+        let Engine = Matter.Engine,
+            Runner = Matter.Runner,
+            Bodies = Matter.Bodies,
+            Composite = Matter.Composite,
+            Mouse = Matter.Mouse,
+            MouseConstraint = Matter.MouseConstraint;
+
+        let engine, runner, mouseConstraint;
+        let isAntigravityActive = false;
+        let physicsBodies = [];
+
+        function toggleGravity() {
+            if (!isAntigravityActive) {
+                startAntigravity();
+            } else {
+                stopAntigravity();
+            }
+        }
+
+        function startAntigravity() {
+            isAntigravityActive = true;
+            document.body.classList.add('antigravity-active');
+
+            document.getElementById('gravity-text').innerText = "🔄 Reset (සාමාන්‍ය තත්වයට)";
+            document.getElementById('gravity-icon').innerText = "🌀";
+
+            engine = Engine.create();
+            engine.gravity.y = 1;
+
+            const elements = document.querySelectorAll('.physics-element');
+
+            const floor = Bodies.rectangle(window.innerWidth / 2, window.innerHeight + 50, window.innerWidth * 2, 100, { isStatic: true });
+            const leftWall = Bodies.rectangle(-50, window.innerHeight / 2, 100, window.innerHeight * 2, { isStatic: true });
+            const rightWall = Bodies.rectangle(window.innerWidth + 50, window.innerHeight / 2, 100, window.innerHeight * 2, { isStatic: true });
+
+            Composite.add(engine.world, [floor, leftWall, rightWall]);
+
+            elements.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                el.style.width = rect.width + 'px';
+                el.style.height = rect.height + 'px';
+                el.style.left = rect.left + 'px';
+                el.style.top = rect.top + 'px';
+
+                const body = Bodies.rectangle(
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height / 2,
+                    rect.width,
+                    rect.height,
+                    { restitution: 0.5, friction: 0.1 }
+                );
+
+                body.domElement = el;
+                physicsBodies.push(body);
+                Composite.add(engine.world, body);
+            });
+
+            const mouse = Mouse.create(document.body);
+            mouseConstraint = MouseConstraint.create(engine, {
+                mouse: mouse,
+                constraint: { stiffness: 0.2, render: { visible: false } }
+            });
+            Composite.add(engine.world, mouseConstraint);
+
+            runner = Runner.create();
+            Runner.run(runner, engine);
+
+            function updatePositions() {
+                if (!isAntigravityActive) return;
+
+                physicsBodies.forEach((body) => {
+                    const el = body.domElement;
+                    const x = body.position.x - (parseFloat(el.style.width) / 2);
+                    const y = body.position.y - (parseFloat(el.style.height) / 2);
+                    const angle = body.angle;
+
+                    el.style.transform = `translate(${x - parseFloat(el.style.left)}px, ${y - parseFloat(el.style.top)}px) rotate(${angle}rad)`;
+                });
+
+                requestAnimationFrame(updatePositions);
+            }
+
+            updatePositions();
+        }
+
+        function stopAntigravity() {
+            isAntigravityActive = false;
+            document.body.classList.remove('antigravity-active');
+
+            document.getElementById('gravity-text').innerText = "Zero-Gravity සක්‍රීය කරන්න";
+            document.getElementById('gravity-icon').innerText = "🚀";
+
+            if (runner) Runner.stop(runner);
+
+            const elements = document.querySelectorAll('.physics-element');
+            elements.forEach((el) => {
+                el.style.position = '';
+                el.style.width = '';
+                el.style.height = '';
+                el.style.left = '';
+                el.style.top = '';
+                el.style.transform = '';
+            });
+
+            physicsBodies = [];
+        }
+    </script>
+</body>
+
+</html>
