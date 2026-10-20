@@ -533,16 +533,66 @@
 
     <!-- Dynamic JavaScript Engine -->
     <script>
+        // ================= LOCAL STORAGE (data save/load) =================
+        const STORAGE_KEY = 'nai-miris-dashboard-v1';
         let harvestRecords = [];
 
-        // Initialize Application
+        function saveState() {
+            const inputs = {};
+            document.querySelectorAll('input[id]').forEach(el => {
+                if (el.type !== 'password') inputs[el.id] = el.value;
+            });
+            const state = {
+                inputs,
+                harvestRecords,
+                npkStatus: document.getElementById('metric-npk-status').innerText,
+                fungiStatus: document.getElementById('metric-fungicide-status').innerText
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.error('Save failed:', e);
+            }
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const state = JSON.parse(raw);
+
+                Object.entries(state.inputs || {}).forEach(([id, val]) => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = val;
+                });
+
+                harvestRecords = state.harvestRecords || [];
+                renderHarvestTable();
+
+                if (state.npkStatus) document.getElementById('metric-npk-status').innerText = state.npkStatus;
+                if (state.fungiStatus) document.getElementById('metric-fungicide-status').innerText = state.fungiStatus;
+
+                if (document.getElementById('plant-date-input').value) updateGrowthCalculations();
+            } catch (e) {
+                console.error('Load failed:', e);
+            }
+        }
+
+        // ================= INITIALIZATION =================
         document.addEventListener('DOMContentLoaded', () => {
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('current-date-badge').innerText = `📅 අද: ${new Date().toLocaleDateString('en-GB')}`;
             document.getElementById('harvest-date-input').value = todayStr;
-            
+
             // Setup Date Change Listener
             document.getElementById('plant-date-input').addEventListener('change', updateGrowthCalculations);
+
+            // Load saved data (must run after default dates are set)
+            loadState();
+
+            // Auto-save on any input/change
+            document.addEventListener('input', saveState);
+            document.addEventListener('change', saveState);
         });
 
         // Plant Date Calculations
@@ -550,6 +600,7 @@
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('plant-date-input').value = todayStr;
             updateGrowthCalculations();
+            saveState();
         }
 
         function updateGrowthCalculations() {
@@ -591,7 +642,7 @@
 
         function highlightStage(num) {
             document.getElementById(`stage-box-${num}`).className = "p-2.5 rounded-xl border border-emerald-500/80 bg-emerald-950/40 text-emerald-300 shadow-md";
-            for(let i=1; i<=num; i++) {
+            for (let i = 1; i <= num; i++) {
                 document.getElementById(`progress-bar-${i}`).classList.remove('opacity-30');
             }
         }
@@ -601,6 +652,7 @@
             const name = document.getElementById('npk-name').value || "NPK පොහොර";
             const date = document.getElementById('npk-date').value || "අද";
             document.getElementById('metric-npk-status').innerText = `${date} යොදන ලදී`;
+            saveState();
             alert(`✓ ${name} යෙදීම සාර්ථකව සටහන් විය!`);
         }
 
@@ -608,33 +660,39 @@
             const name = document.getElementById('fungi-name').value || "දිලීර නාශක";
             const date = document.getElementById('fungi-date').value || "අද";
             document.getElementById('metric-fungicide-status').innerText = `${date} යොදන ලදී`;
+            saveState();
             alert(`✓ ${name} යෙදීම සාර්ථකව සටහන් විය!`);
         }
 
         function savePestiLog() {
             const name = document.getElementById('pesti-name').value || "පළිබෝධ නාශක";
+            saveState();
             alert(`✓ ${name} යෙදීම සාර්ථකව සටහන් විය!`);
         }
 
         function saveHormoneLog() {
             const name = document.getElementById('hormone-name').value || "හෝමෝන";
+            saveState();
             alert(`✓ ${name} යෙදීම සාර්ථකව සටහන් විය!`);
         }
 
         // Harvest Form Logic
         function setHarvestToday() {
             document.getElementById('harvest-date-input').value = new Date().toISOString().split('T')[0];
+            saveState();
         }
 
         function addWeight(val) {
             const input = document.getElementById('harvest-weight-input');
             input.value = (parseFloat(input.value || 0) + val).toFixed(2);
             calculateHarvestTotal();
+            saveState();
         }
 
         function setPrice(val) {
             document.getElementById('harvest-price-input').value = val;
             calculateHarvestTotal();
+            saveState();
         }
 
         function calculateHarvestTotal() {
@@ -655,8 +713,8 @@
             }
 
             const total = weight * price;
-            harvestRecords.push({ id: harvestRecords.length + 1, date, weight, price, total, note });
-            
+            harvestRecords.push({ id: Date.now(), date, weight, price, total, note });
+
             // Clear Inputs
             document.getElementById('harvest-weight-input').value = '';
             document.getElementById('harvest-price-input').value = '';
@@ -664,11 +722,13 @@
             document.getElementById('calculated-total-display').innerText = '0.00';
 
             renderHarvestTable();
+            saveState();
         }
 
         function deleteHarvest(id) {
             harvestRecords = harvestRecords.filter(r => r.id !== id);
             renderHarvestTable();
+            saveState();
         }
 
         function renderHarvestTable() {
